@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.douyin.bean.PostVideoResponse;
 import com.example.douyin.network.IMiniDouyinService;
@@ -30,8 +32,12 @@ public class PostVideo extends AppCompatActivity {
     private static final String TAG = "PostVideo";
     private static final int PICK_IMAGE = 1;
     private static final int PICK_VIDEO = 2;
+    private static final int REQUEST_VIDEO_CAPTURE = 3;
+
     private Button postBtn;
     private Button selectBtn;
+    private Button recordBtn;
+    private VideoView videoView;
     public Uri mSelectedImage;
     private Uri mSelectedVideo;
 
@@ -56,6 +62,13 @@ public class PostVideo extends AppCompatActivity {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), f);
         return MultipartBody.Part.createFormData(name, f.getName(), requestFile);
     }
+
+    public void recordVideo(){
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if(intent.resolveActivity(getPackageManager())!=null){
+            startActivityForResult(intent,REQUEST_VIDEO_CAPTURE);
+        }
+    }
     public void chooseVideo() {
         Intent intent = new Intent();
         intent.setType("video/*");
@@ -74,9 +87,15 @@ public class PostVideo extends AppCompatActivity {
                 mSelectedImage = data.getData();
                 Log.d(TAG, "selectedImage = " + mSelectedImage);
 
-            } else if (requestCode == PICK_VIDEO) {
+            } else if (requestCode == PICK_VIDEO || requestCode == REQUEST_VIDEO_CAPTURE) {
+
                 mSelectedVideo = data.getData();
+                videoView.setVideoURI(mSelectedVideo);
                 Log.d(TAG, "mSelectedVideo = " + mSelectedVideo);
+                videoView.start();
+
+            }
+            else if(requestCode == REQUEST_VIDEO_CAPTURE){
 
             }
         }

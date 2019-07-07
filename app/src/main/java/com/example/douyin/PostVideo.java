@@ -95,9 +95,7 @@ public class PostVideo extends AppCompatActivity {
                 videoView.start();
 
             }
-            else if(requestCode == REQUEST_VIDEO_CAPTURE){
 
-            }
         }
     }
     private void postVideo() {

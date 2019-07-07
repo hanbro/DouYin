@@ -2,6 +2,9 @@ package com.example.douyin.network;
 
 //import com.bytedance.android.lesson.restapi.solution.bean.FeedResponse;
 import com.example.douyin.bean.PostVideoResponse;
+import com.example.douyin.bean.GetVideoResponse;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -29,13 +32,13 @@ public interface IMiniDouyinService {
     //    "success": true
     //}
     @Multipart
-
     @POST("mini_douyin/invoke/video?")
     Call<PostVideoResponse> postVideo(@Query("student_id") String student_id,
                                       @Query("user_name") String user_name,
                                       @Part MultipartBody.Part image,
                                       @Part MultipartBody.Part video);
-
+    @GET("v1/images/search?limit=10")
+    Call<List<GetVideoResponse>> getVideo();
     //@GET("mini_douyin/invoke/video")
     //Call<FeedResponse> getVideo();
 

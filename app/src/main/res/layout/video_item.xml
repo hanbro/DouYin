@@ -1,28 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingTop="12dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="10dp">
-
+    android:orientation="horizontal">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/video_img"
         />
-
-
-    <!-- toRightOf 在X的右边-->
-    <TextView
-        android:id="@+id/tv_user"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/video_img"
-        android:textColor="#ffffff"
-        android:textSize="20sp"
-        tools:text="AABBCC" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="发布用户:"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+        <TextView
+            android:id="@+id/tv_user"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            android:layout_marginBottom="3dp"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            android:text="发布时间:"
+            android:layout_marginBottom="3dp"/>
+
+        <TextView
+            android:id="@+id/create_time"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+
+
+
+
+
+</FrameLayout>

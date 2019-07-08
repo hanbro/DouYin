@@ -34,19 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="上传视频" />
-        <!--<Button-->
-        <!--android:id="@+id/person"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="个人"-->
-        <!--android:layout_toRightOf="@+id/upload"/>-->
-        <!--<Button-->
-        <!--android:id="@+id/comment"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="评论"-->
-        <!--android:layout_toStartOf="@+id/listView"-->
-        <!--android:layout_toRightOf="@+id/person"/>-->
+
     </LinearLayout>
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,15 +42,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/liner"
-        tools:context=".try_button">
+        android:layout_above="@+id/liner">
         <Button
-            android:id="@+id/btn"
+            android:id="@+id/fresh_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:onClick="requestData"
-            android:text="requestData"
+            android:text="刷新"
             />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
@@ -70,7 +57,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/btn"
+            app:layout_constraintTop_toTopOf="@id/fresh_btn"
             />
 
     </android.support.constraint.ConstraintLayout>

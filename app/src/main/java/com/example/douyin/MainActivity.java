@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rv;
     private Adapter adapter;
-    private Button video, upload, record;
+    private Button video, upload, record,freshBtn;
     List<Feed> GVRList = new ArrayList<>();
 
     @Override
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+            holder.create_time.setText(create_time);
             holder.tv_user.setText(user);
             Glide.with(holder.video_img.getContext()).load(url).into(holder.video_img);
         }
@@ -115,13 +116,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         class MyViewHolder extends RecyclerView.ViewHolder{
-            private TextView tv_user;
+            private TextView tv_user,create_time;
             private ImageView video_img;
             public MyViewHolder(View v){
                 super(v);
                 tv_user = v.findViewById(R.id.tv_user);
                 video_img = v.findViewById(R.id.video_img);
-
+                create_time = v.findViewById(R.id.create_time);
             }
         }
     }
@@ -132,14 +133,7 @@ public class MainActivity extends AppCompatActivity {
         rv = findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter = new Adapter(this));
-
-//        upload.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MainActivity.this,PostVideo.class);
-//                startActivity(intent);
-//            }
-//        });
+        freshBtn = findViewById(R.id.fresh_btn);
         findViewById(R.id.video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,8 +157,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void requestData(View view)  {
-       // mBtn.setText("requesting...");
-       // mBtn.setEnabled(false);
+       freshBtn.setText("刷新中");
+       freshBtn.setEnabled(false);
 
 
         new Thread(){
@@ -190,9 +184,12 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             loadPics(finalResponse.body());
+                            freshBtn.setText("Refresh");
+                            freshBtn.setEnabled(true);
                         }
                     });
                 }
+
 
             }
         }.start();

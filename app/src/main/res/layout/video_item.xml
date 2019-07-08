@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/video_img"
         android:textColor="#ffffff"
-        android:textSize="15sp"
+        android:textSize="20sp"
         tools:text="AABBCC" />
 
 </RelativeLayout>

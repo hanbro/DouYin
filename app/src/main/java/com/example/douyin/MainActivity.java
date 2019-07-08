@@ -133,11 +133,29 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter = new Adapter(this));
 
-        upload.setOnClickListener(new View.OnClickListener() {
+//        upload.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this,PostVideo.class);
+//                startActivity(intent);
+//            }
+//        });
+        findViewById(R.id.video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,PostVideo.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
+            }
+        });
+        findViewById(R.id.upload).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PostVideo.class));
+            }
+        });
+        findViewById(R.id.transcribe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, PlayVideo.class));
             }
         });
     }

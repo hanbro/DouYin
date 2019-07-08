@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rv;
     private Adapter adapter;
-    private Button video, upload;
+    private Button video, upload, record;
     List<Feed> GVRList = new ArrayList<>();
 
     @Override
@@ -132,6 +132,14 @@ public class MainActivity extends AppCompatActivity {
         rv = findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter = new Adapter(this));
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,PostVideo.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

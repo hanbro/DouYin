@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -98,72 +99,80 @@ public class CustomRecord extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_picture).setOnClickListener(v -> {
-            //todo 拍一张照片
-            mCamera.takePicture(null,null,mPicture);
-
-        });
-
-        findViewById(R.id.btn_record).setOnClickListener(v -> {
-            //todo 录制，第一次点击是start，第二次点击是stop
-            if (isRecording) {
-                //todo 停止录制
-                releaseMediaRecorder();
-            } else {
-                //todo 录制
-                prepareVideoRecorder();
+        findViewById(R.id.btn_picture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo 拍一张照片
+                mCamera.takePicture(null, null, mPicture);
 
             }
         });
 
-        findViewById(R.id.btn_facing).setOnClickListener(v -> {
-            //todo 切换前后摄像头
-            if(CAMERA_TYPE == Camera.CameraInfo.CAMERA_FACING_BACK){
-                CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_FRONT;
-                releaseCameraAndPreview();
-                mCamera = getCamera(CAMERA_TYPE);
-                try{
-                    mCamera.setPreviewDisplay(mSurfaceView.getHolder());
+        findViewById(R.id.btn_record).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo 录制，第一次点击是start，第二次点击是stop
+                if (isRecording) {
+                    //todo 停止录制
+                    CustomRecord.this.releaseMediaRecorder();
+                } else {
+                    //todo 录制
+                    CustomRecord.this.prepareVideoRecorder();
+
                 }
-                catch(IOException e) {
-                    e.printStackTrace();
-                }
-                mCamera.startPreview();
-
-
-
             }
-            else {
-                CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_BACK;
-                releaseCameraAndPreview();
-                mCamera = getCamera(CAMERA_TYPE);
-                try{
-                    mCamera.setPreviewDisplay(mSurfaceView.getHolder());
-                }
-                catch(IOException e) {
-                    e.printStackTrace();
-                }
-                mCamera.startPreview();
-
-            }
-
         });
 
-        findViewById(R.id.btn_zoom).setOnClickListener(v -> {
-            //todo 调焦，需要判断手机是否支持
-
-            handler = new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    Log.v("zzw",""+msg.what);
-                    switch (msg.what){
-                        case MSG_AUTOFUCS:
-                            mCamera.autoFocus(autoFocusCallback);
-                            break;
+        findViewById(R.id.btn_facing).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo 切换前后摄像头
+                if (CAMERA_TYPE == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                    CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_FRONT;
+                    CustomRecord.this.releaseCameraAndPreview();
+                    mCamera = CustomRecord.this.getCamera(CAMERA_TYPE);
+                    try {
+                        mCamera.setPreviewDisplay(mSurfaceView.getHolder());
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                }
-            };
+                    mCamera.startPreview();
 
+
+                } else {
+                    CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_BACK;
+                    CustomRecord.this.releaseCameraAndPreview();
+                    mCamera = CustomRecord.this.getCamera(CAMERA_TYPE);
+                    try {
+                        mCamera.setPreviewDisplay(mSurfaceView.getHolder());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mCamera.startPreview();
+
+                }
+
+            }
+        });
+
+        findViewById(R.id.btn_zoom).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo 调焦，需要判断手机是否支持
+
+                handler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        Log.v("zzw", "" + msg.what);
+                        switch (msg.what) {
+                            case MSG_AUTOFUCS:
+                                mCamera.autoFocus(autoFocusCallback);
+                                break;
+                        }
+                    }
+                };
+
+            }
         });
         autoFocusCallback = new AutoFocusCallback();
         autoFocusCallback.setHandler(handler,MSG_AUTOFUCS);
@@ -288,20 +297,23 @@ public class CustomRecord extends AppCompatActivity {
     }
 
 
-    private Camera.PictureCallback mPicture = (data, camera) -> {
-        File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-        if (pictureFile == null) {
-            return;
-        }
-        try {
-            FileOutputStream fos = new FileOutputStream(pictureFile);
-            fos.write(data);
-            fos.close();
-        } catch (IOException e) {
-            Log.d("mPicture", "Error accessing file: " + e.getMessage());
-        }
+    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+            if (pictureFile == null) {
+                return;
+            }
+            try {
+                FileOutputStream fos = new FileOutputStream(pictureFile);
+                fos.write(data);
+                fos.close();
+            } catch (IOException e) {
+                Log.d("mPicture", "Error accessing file: " + e.getMessage());
+            }
 
-        mCamera.startPreview();
+            mCamera.startPreview();
+        }
     };
 
 

@@ -1,7 +1,6 @@
 package com.example.douyin;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,13 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.douyin.bean.GetVideoResponse;
+import com.example.douyin.bean.Feed;
+import com.example.douyin.bean.FeedResponse;
+import com.example.douyin.network.IMiniDouyinService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rv;
     private Adapter adapter;
-    private Button video, upload, transcribe;
-    List<GetVideoResponse> GVRList = new ArrayList<>();
+    private Button video, upload;
+    List<Feed> GVRList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         checkForPermission();
         initBtn();
-        rv = findViewById(R.id.rv);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(adapter = new Adapter(this));
+
     }
 
     public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-            View view = LayoutInflater.from(lContext).inflate(R.layout.activity_get_video,parent,false);
+            View view = LayoutInflater.from(lContext).inflate(R.layout.video_item,parent,false);
             MyViewHolder holder = new MyViewHolder(view);
             Log.i("adapter", "onCreateViewHolder: ");
             return holder;
@@ -72,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
 //                    startActivity(intent);
 //                }
 //            });
-            String url = GVRList.get(position).getUrl();
-            String user = GVRList.get(position).getId();
+            String url = GVRList.get(position).getImage_url();
+            String user = GVRList.get(position).getUser_Name();
+            String create_time = GVRList.get(position).getCreateAt();
             holder.tv_user.setText(user);
             Glide.with(holder.video_img.getContext()).load(url).into(holder.video_img);
         }
@@ -95,59 +94,59 @@ public class MainActivity extends AppCompatActivity {
 
     public void initBtn(){
         video = findViewById(R.id.video);
-        transcribe = findViewById(R.id.transcribe);
         upload = findViewById(R.id.upload);
+        rv = findViewById(R.id.rv);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(adapter = new Adapter(this));
     }
 
     public void checkForPermission(){
 
     }
 
-    public void requestData(View view) throws IOException {
-        mBtn.setText("requesting...");
-        mBtn.setEnabled(false);
+    public void requestData(View view)  {
+       // mBtn.setText("requesting...");
+       // mBtn.setEnabled(false);
 
-        // TODO-C1 (3) Send request for 5 random cats here, don't forget to use {@link retrofit2.Call#enqueue}
-        // Call restoreBtn() and loadPics(response.body()) if success
-        // Call restoreBtn() if failure
+
         new Thread(){
             @Override
             public void run(){
                 Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("https://api.thecatapi.com/")
+                        .baseUrl("http://test.androidcamp.bytedance.com/")
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                Response<List<Cat>> response = null;
+                Response<FeedResponse> response = null;
                 try{
-                    response = retrofit.create(ICatService.class).randomCat().execute();
+                    response = retrofit.create(IMiniDouyinService.class).getVideo().execute();
                 } catch (IOException e){
                     e.printStackTrace();
                 }
 
                 if (response.body()!=null){
-                    final Response<List<Cat>> finalResponse = response;
-                    mRv.post(new Runnable() {
+                    final Response<FeedResponse> finalResponse = response;
+                    rv.post(new Runnable() {
                         @Override
                         public void run() {
                             loadPics(finalResponse.body());
                         }
                     });
                 }
-                Log.d(TAG, "run: 日志");
+
             }
         }.start();
         restoreBtn();
     }
 
-    private void loadPics(List<Cat> cats) {
-        mCats = cats;
-        mRv.getAdapter().notifyDataSetChanged();
+    private void loadPics(FeedResponse feedResponse) {
+        GVRList = feedResponse.getFeeds();
+        rv.getAdapter().notifyDataSetChanged();
     }
 
     private void restoreBtn() {
-        mBtn.setText("Refresh");
-        mBtn.setEnabled(true);
+       // mBtn.setText("Refresh");
+       // mBtn.setEnabled(true);
     }
 
 }

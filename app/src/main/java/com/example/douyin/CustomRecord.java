@@ -1,9 +1,12 @@
 package com.example.douyin;
 
+import android.content.Intent;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -99,14 +102,14 @@ public class CustomRecord extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.btn_picture).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //todo 拍一张照片
-                mCamera.takePicture(null, null, mPicture);
-
-            }
-        });
+//        findViewById(R.id.btn_picture).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //todo 拍一张照片
+//                mCamera.takePicture(null, null, mPicture);
+//
+//            }
+//        });
 
         findViewById(R.id.btn_record).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,6 +261,7 @@ public class CustomRecord extends AppCompatActivity {
 
     private boolean prepareVideoRecorder() {
         //todo 准备MediaRecorder
+        String video_path;
         isRecording = true;
         mMediaRecorder = new MediaRecorder();
         mCamera.unlock();
@@ -271,6 +275,13 @@ public class CustomRecord extends AppCompatActivity {
         mMediaRecorder.setPreviewDisplay(mSurfaceView.getHolder().getSurface());
         mMediaRecorder.setOrientationHint(rotationDegree);
         try{
+            video_path = "/sdcard/DCIM/Camera/Douyin_"+System.currentTimeMillis();
+            mMediaRecorder.setOutputFile(video_path + ".mp4");
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(new File(video_path));
+            intent.setData(uri);
+            CustomRecord.this.sendBroadcast(intent);
+            //sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory()+ video_path)));
             mMediaRecorder.prepare();
             mMediaRecorder.start();
         }catch(IOException e){

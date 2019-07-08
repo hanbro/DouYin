@@ -2,6 +2,7 @@ package com.example.douyin;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -95,6 +96,16 @@ public class MainActivity extends AppCompatActivity {
             String url = GVRList.get(position).getImage_url();
             String user = GVRList.get(position).getUser_Name();
             String create_time = GVRList.get(position).getCreateAt();
+            holder.video_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this,PlayVideo.class);
+                    intent.putExtra("user_name",GVRList.get(position).getUser_Name());
+                    intent.putExtra("video_url",GVRList.get(position).getVideo_url());
+
+                    startActivity(intent);
+                }
+            });
             holder.tv_user.setText(user);
             Glide.with(holder.video_img.getContext()).load(url).into(holder.video_img);
         }
@@ -110,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 super(v);
                 tv_user = v.findViewById(R.id.tv_user);
                 video_img = v.findViewById(R.id.video_img);
+
             }
         }
     }
@@ -140,11 +152,13 @@ public class MainActivity extends AppCompatActivity {
                 Response<FeedResponse> response = null;
                 try{
                     response = retrofit.create(IMiniDouyinService.class).getVideo().execute();
+                    Log.d("jzh", "run: "+ response);
                 } catch (IOException e){
+                    Log.d("jzh", "run: null "+ retrofit.create(IMiniDouyinService.class).getVideo());
                     e.printStackTrace();
                 }
 
-                if (response.body()!=null){
+                if (response!=null &&  response.isSuccessful() == true){
                     final Response<FeedResponse> finalResponse = response;
                     rv.post(new Runnable() {
                         @Override
@@ -156,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }.start();
-        restoreBtn();
     }
 
     private void loadPics(FeedResponse feedResponse) {
@@ -168,5 +181,6 @@ public class MainActivity extends AppCompatActivity {
        // mBtn.setText("Refresh");
        // mBtn.setEnabled(true);
     }
+
 
 }

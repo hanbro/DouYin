@@ -8,8 +8,8 @@ public class Feed {
     @SerializedName("user_name")private String user_Name;
     @SerializedName("image_url")private String image_url;
     @SerializedName("video_url")private String video_url;
-    @SerializedName("createAt")private String createAt;
-    @SerializedName("updateAt")private String updateAt;
+    @SerializedName("createdAt")private String createAt;
+    @SerializedName("updatedAt")private String updateAt;
 
     public String getStudent_id() {
         return student_id;
@@ -59,3 +59,4 @@ public class Feed {
             this.video_url = video_url;
         }
 }
+

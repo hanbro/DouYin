@@ -1,6 +1,9 @@
 package com.example.douyin;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.douyin.bean.Feed;
@@ -41,6 +45,35 @@ public class MainActivity extends AppCompatActivity {
         initBtn();
 
     }
+    private String[] mPermissionsArrays = new String[]{
+            Manifest.permission.INTERNET,
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO};
+    public void checkForPermission(){
+        if (!checkPermissionAllGranted(mPermissionsArrays)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(mPermissionsArrays, 123456);
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "已经获取所有所需权限", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private boolean checkPermissionAllGranted(String[] permissions) {
+        // 6.0以下不需要
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        for (String permission : permissions) {
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                // 只要有一个权限没有被授予, 则直接返回 false
+                return false;
+            }
+        }
+        return true;
+    }
 
     public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
@@ -59,17 +92,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position){
 
-//            holder.title.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(Exercises3.this,ChatRoom.class);
-//                    intent.putExtra("description",msgList.get(position).getDescription());
-//                    intent.putExtra("time",msgList.get(position).getTime());
-//                    intent.putExtra("title",msgList.get(position).getTitle());
-//                    intent.putExtra("position",position);
-//                    startActivity(intent);
-//                }
-//            });
             String url = GVRList.get(position).getImage_url();
             String user = GVRList.get(position).getUser_Name();
             String create_time = GVRList.get(position).getCreateAt();
@@ -100,9 +122,7 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter(adapter = new Adapter(this));
     }
 
-    public void checkForPermission(){
 
-    }
 
     public void requestData(View view)  {
        // mBtn.setText("requesting...");

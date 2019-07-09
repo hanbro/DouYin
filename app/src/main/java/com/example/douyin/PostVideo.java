@@ -114,6 +114,7 @@ public class PostVideo extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
                                 mSelectedImage = null;
                                 mSelectedVideo = null;
+                                finish();
                             }
                         }).setNegativeButton("不了，我在想想", new DialogInterface.OnClickListener() {//添加返回按钮
                             @Override

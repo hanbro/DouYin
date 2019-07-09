@@ -15,25 +15,31 @@
         android:id="@+id/liner"
         android:gravity="bottom"
         android:orientation="horizontal">
-        <Button
-            android:id="@+id/video"
+
+        <ImageButton
+            android:id="@+id/fresh_btn"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:onClick="requestData"
+            android:src="@mipmap/newrefresh_light"
             android:layout_weight="1"
-            android:text="抖音视频" />
-        <Button
+            android:background="#484848"
+            />
+        <ImageButton
             android:id="@+id/transcribe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="录制视频"
-            android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="上传视频" />
+            android:background="#484848"
+            android:src="@mipmap/cameraadd"/>
+
+        <ImageButton
+            android:id="@+id/upload"
+            android:src="@mipmap/upload"
+            android:layout_height="wrap_content"
+            android:background="#484848"
+            android:layout_weight="1" />
 
     </LinearLayout>
     <android.support.constraint.ConstraintLayout
@@ -43,22 +49,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/liner">
-        <Button
-            android:id="@+id/fresh_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:onClick="requestData"
-            android:text="刷新"
-            />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="@id/fresh_btn"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

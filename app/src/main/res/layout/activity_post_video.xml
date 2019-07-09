@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
     android:id="@+id/record_page">
 
     <VideoView
         android:id="@+id/img"
-        android:layout_width="240dp"
-        android:layout_height="426dp" />
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        />
 
 
     <LinearLayout

@@ -8,7 +8,9 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rv;
     private Adapter adapter;
     private Button video, upload, record,freshBtn;
+    private SnapHelper snapHelper;
     List<Feed> GVRList = new ArrayList<>();
 
     @Override
@@ -128,19 +131,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initBtn(){
-        video = findViewById(R.id.video);
+
         upload = findViewById(R.id.upload);
         rv = findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter = new Adapter(this));
-        freshBtn = findViewById(R.id.fresh_btn);
-        findViewById(R.id.video).setOnClickListener(new View.OnClickListener() {
+
+
+        video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                //startActivity(new Intent(MainActivity.this, MainActivity.class));
             }
         });
-        findViewById(R.id.upload).setOnClickListener(new View.OnClickListener() {
+        upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, PostVideo.class));

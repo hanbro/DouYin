@@ -23,14 +23,14 @@
             android:onClick="requestData"
             android:src="@mipmap/refresh_light"
             android:layout_weight="1"
-            android:background="#484848"
+            android:background="#00000000"
             />
         <ImageButton
             android:id="@+id/transcribe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#484848"
+            android:background="#00000000"
             android:src="@mipmap/cameraadd"/>
 
         <ImageButton
@@ -38,7 +38,7 @@
             android:src="@mipmap/upload"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:background="#484848"
+            android:background="#00000000"
             android:layout_weight="1" />
 
     </LinearLayout>

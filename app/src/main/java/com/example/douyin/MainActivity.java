@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("抖音轻聊版");
         setContentView(R.layout.activity_main);
         checkForPermission();
         initBtn();

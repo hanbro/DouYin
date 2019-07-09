@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import static android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
 import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 import static com.example.douyin.utils.Utils.MEDIA_TYPE_IMAGE;
 import static com.example.douyin.utils.Utils.MEDIA_TYPE_VIDEO;
@@ -34,7 +35,7 @@ public class CustomRecord extends AppCompatActivity {
     private SurfaceView mSurfaceView;
     private Camera mCamera;
 
-    private int CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private int CAMERA_TYPE = CAMERA_FACING_BACK;
 
     private boolean isRecording = false;
 
@@ -72,6 +73,7 @@ public class CustomRecord extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("无你相机");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -111,12 +113,12 @@ public class CustomRecord extends AppCompatActivity {
                 //todo 录制，第一次点击是start，第二次点击是stop
                 if (isRecording) {
                     //todo 停止录制
-                    recordBtn.setBackgroundResource(R.mipmap.camera);
+                    recordBtn.setImageResource(R.mipmap.camera);
                     CustomRecord.this.releaseMediaRecorder();
 
                 } else {
                     //todo 录制
-                    recordBtn.setBackgroundResource(R.mipmap.camera2);
+                    recordBtn.setImageResource(R.mipmap.camera2);
                     CustomRecord.this.prepareVideoRecorder();
 
                 }
@@ -127,7 +129,7 @@ public class CustomRecord extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //todo 切换前后摄像头
-                if (CAMERA_TYPE == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                if (CAMERA_TYPE == CAMERA_FACING_BACK) {
                     CAMERA_TYPE = CAMERA_FACING_FRONT;
                     CustomRecord.this.releaseCameraAndPreview();
                     mCamera = CustomRecord.this.getCamera(CAMERA_TYPE);
@@ -140,7 +142,7 @@ public class CustomRecord extends AppCompatActivity {
 
 
                 } else {
-                    CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_BACK;
+                    CAMERA_TYPE = CAMERA_FACING_BACK;
                     CustomRecord.this.releaseCameraAndPreview();
                     mCamera = CustomRecord.this.getCamera(CAMERA_TYPE);
                     try {

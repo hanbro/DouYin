@@ -20,7 +20,9 @@ public class PlayVideo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String name =  getIntent().getStringExtra("user_name");
         super.onCreate(savedInstanceState);
+        this.setTitle("作者： " + name);
         setContentView(R.layout.activity_play_video);
         initBtn();
         playVideo();
@@ -41,7 +43,6 @@ public class PlayVideo extends AppCompatActivity {
 
     private void playVideo(){
 
-        String name =  getIntent().getStringExtra("user_name");
         String url =  getIntent().getStringExtra("video_url");
         videoView.setVideoURI(Uri.parse(url));
 

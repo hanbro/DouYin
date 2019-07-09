@@ -63,6 +63,7 @@ public class PostVideo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("上传视频");
         setContentView(R.layout.activity_post_video);
         initBtn();
     }

@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import static android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 import static com.example.douyin.utils.Utils.MEDIA_TYPE_IMAGE;
 import static com.example.douyin.utils.Utils.MEDIA_TYPE_VIDEO;
 import static com.example.douyin.utils.Utils.getOutputMediaFile;
@@ -131,7 +132,7 @@ public class CustomRecord extends AppCompatActivity {
             public void onClick(View v) {
                 //todo 切换前后摄像头
                 if (CAMERA_TYPE == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                    CAMERA_TYPE = Camera.CameraInfo.CAMERA_FACING_FRONT;
+                    CAMERA_TYPE = CAMERA_FACING_FRONT;
                     CustomRecord.this.releaseCameraAndPreview();
                     mCamera = CustomRecord.this.getCamera(CAMERA_TYPE);
                     try {
@@ -217,25 +218,45 @@ public class CustomRecord extends AppCompatActivity {
         int rotation = getWindowManager().getDefaultDisplay()
                 .getRotation();
         int degrees = 0;
-        switch (rotation) {
-            case Surface.ROTATION_0:
-                degrees = 0;
-                break;
-            case Surface.ROTATION_90:
-                degrees = DEGREE_90;
-                break;
-            case Surface.ROTATION_180:
-                degrees = DEGREE_180;
-                break;
-            case Surface.ROTATION_270:
-                degrees = DEGREE_270;
-                break;
-            default:
-                break;
+        if(cameraId == CAMERA_FACING_FRONT){
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    degrees = DEGREE_180;
+                    break;
+                case Surface.ROTATION_90:
+                    degrees = DEGREE_270;
+                    break;
+                case Surface.ROTATION_180:
+                    degrees = 0;
+                    break;
+                case Surface.ROTATION_270:
+                    degrees = DEGREE_90;
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    degrees = 0;
+                    break;
+                case Surface.ROTATION_90:
+                    degrees = DEGREE_90;
+                    break;
+                case Surface.ROTATION_180:
+                    degrees = DEGREE_180;
+                    break;
+                case Surface.ROTATION_270:
+                    degrees = DEGREE_270;
+                    break;
+                default:
+                    break;
+            }
         }
 
+
         int result;
-        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+        if (info.facing == CAMERA_FACING_FRONT) {
             result = (info.orientation + degrees) % DEGREE_360;
             result = (DEGREE_360 - result) % DEGREE_360;  // compensate the mirror
         } else {  // back-facing

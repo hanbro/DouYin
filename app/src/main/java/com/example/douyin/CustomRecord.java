@@ -111,12 +111,12 @@ public class CustomRecord extends AppCompatActivity {
                 //todo 录制，第一次点击是start，第二次点击是stop
                 if (isRecording) {
                     //todo 停止录制
-                    recordBtn.setBackgroundResource(R.mipmap.recordfill);
+                    recordBtn.setImageResource(R.mipmap.camera);
                     CustomRecord.this.releaseMediaRecorder();
 
                 } else {
                     //todo 录制
-                    recordBtn.setBackgroundResource(R.mipmap.recordfill1);
+                    recordBtn.setImageResource(R.mipmap.camera2);
                     CustomRecord.this.prepareVideoRecorder();
 
                 }

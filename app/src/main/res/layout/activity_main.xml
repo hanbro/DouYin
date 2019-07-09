@@ -20,9 +20,8 @@
             android:id="@+id/fresh_btn"
             android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:scaleType="fitXY"
             android:onClick="requestData"
-            android:src="@mipmap/newrefresh_light"
+            android:src="@mipmap/refresh_light"
             android:layout_weight="1"
             android:background="#484848"
             />

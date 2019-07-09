@@ -19,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -46,10 +47,10 @@ public class PostVideo extends AppCompatActivity {
     private static final int PICK_VIDEO = 2;
     private static final int REQUEST_VIDEO_CAPTURE = 3;
 
-    private Button cancelBtn;
-    private Button postBtn;
-    private Button selectBtn;
-    private Button recordBtn;
+    private ImageButton cancelBtn;
+    private ImageButton postBtn;
+    private ImageButton selectBtn;
+    private ImageButton recordBtn;
     private VideoView videoView;
     private Uri mSelectedImage;
     private Uri mSelectedVideo;
@@ -233,8 +234,6 @@ public class PostVideo extends AppCompatActivity {
         }
     }
     private void postVideo() {
-        postBtn.setText("POSTING...");
-        postBtn.setEnabled(false);
         final MultipartBody.Part coverImage = getMultipartFromUri("cover_image",mSelectedImage);
         final MultipartBody.Part video = getMultipartFromUri("video",mSelectedVideo);
 
@@ -259,8 +258,6 @@ public class PostVideo extends AppCompatActivity {
                 if (response.body().isSuccess() != false) {
                     videoView.post(new Runnable() {
                         public void run() {
-                            postBtn.setText("Post");
-                            postBtn.setEnabled(true);
                             Toast.makeText(PostVideo.this,"post success",Toast.LENGTH_SHORT).show();
 
                         }

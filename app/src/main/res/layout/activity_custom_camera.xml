@@ -26,12 +26,14 @@
             android:src="@mipmap/camerarotate"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
+            android:background="#00000000"
             android:text="facing" />
         <ImageButton
             android:id="@+id/btn_record"
             android:src="@mipmap/camera"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
+            android:background="#00000000"
             android:text="record"/>
 
         <ImageButton
@@ -39,6 +41,7 @@
             android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:src="@mipmap/light"
+            android:background="#00000000"
             android:text="zoom" />
 
     </LinearLayout>

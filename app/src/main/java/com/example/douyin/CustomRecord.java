@@ -17,6 +17,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,7 +39,7 @@ public class CustomRecord extends AppCompatActivity {
     private boolean isRecording = false;
 
     private int rotationDegree = 0;
-
+    private ImageButton recordBtn;
 
     private static final int MSG_AUTOFUCS = 1001;
     private Handler handler;
@@ -102,25 +104,19 @@ public class CustomRecord extends AppCompatActivity {
                 mCamera = null;
             }
         });
-
-//        findViewById(R.id.btn_picture).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //todo 拍一张照片
-//                mCamera.takePicture(null, null, mPicture);
-//
-//            }
-//        });
-
-        findViewById(R.id.btn_record).setOnClickListener(new View.OnClickListener() {
+        recordBtn = findViewById(R.id.btn_record);
+        recordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //todo 录制，第一次点击是start，第二次点击是stop
                 if (isRecording) {
                     //todo 停止录制
+                    recordBtn.setBackgroundResource(R.mipmap.recordfill);
                     CustomRecord.this.releaseMediaRecorder();
+
                 } else {
                     //todo 录制
+                    recordBtn.setBackgroundResource(R.mipmap.recordfill1);
                     CustomRecord.this.prepareVideoRecorder();
 
                 }

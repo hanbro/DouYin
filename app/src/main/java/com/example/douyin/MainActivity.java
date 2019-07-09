@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rv;
     private Adapter adapter;
-    private Button video, upload, record,freshBtn;
+    private ImageButton video, upload, record,freshBtn;
     private SnapHelper snapHelper;
     List<Feed> GVRList = new ArrayList<>();
 
@@ -138,12 +139,7 @@ public class MainActivity extends AppCompatActivity {
         rv.setAdapter(adapter = new Adapter(this));
 
 
-        video.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, MainActivity.class));
-            }
-        });
+
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void requestData(View view)  {
-       freshBtn.setText("刷新中");
-       freshBtn.setEnabled(false);
 
 
         new Thread(){
@@ -188,8 +182,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             loadPics(finalResponse.body());
-                            freshBtn.setText("Refresh");
-                            freshBtn.setEnabled(true);
+
                         }
                     });
                 }

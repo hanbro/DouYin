@@ -38,6 +38,7 @@
             android:id="@+id/upload"
             android:src="@mipmap/upload"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:background="#484848"
             android:layout_weight="1" />
 

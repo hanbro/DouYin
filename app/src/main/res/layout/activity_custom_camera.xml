@@ -20,13 +20,6 @@
         android:layout_marginBottom="20dp"
         android:gravity="center">
 
-        <!--<Button-->
-            <!--android:id="@+id/btn_picture"-->
-            <!--android:layout_width="90dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="picture" />-->
-
-
 
         <ImageButton
             android:id="@+id/btn_facing"
@@ -39,7 +32,8 @@
             android:src="@mipmap"
             android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:text="record" />
+            android:text="record"
+            android:src="@mipmap/recordfill"/>
 
         <Button
             android:id="@+id/btn_zoom"
